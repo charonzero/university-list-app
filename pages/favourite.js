@@ -30,19 +30,15 @@ export default function Home() {
   }
 
   const fetchData = async () => {
-    let url =
-      "http://universities.hipolabs.com/search?name=" +
-      university +
-      "&country=" +
-      country;
     var tempData = await axios
-      .get(url)
-      .then(function (response) {
-        return Sorting(response.data);
+      .post("./api/favourite")
+      .then((response) => {
+        return Sorting(response.data.favourite);
       })
       .catch(function (error) {
         console.log(error);
       });
+
     axios
       .get("./api/session")
       .then((response) => {
@@ -85,7 +81,6 @@ export default function Home() {
     if (sort[0] == "desc") temp.reverse();
     return temp;
   }
-  
   function handleChange(event) {
     if (event.target.value !== undefined && event.target.value !== null) {
       const regex = /([^:\s]+):([^:\s]+)/g;
